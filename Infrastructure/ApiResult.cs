@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Zaginiony24.Infrastructure
 {
@@ -30,5 +31,6 @@ namespace Zaginiony24.Infrastructure
         {
             ErrorCodes.AddRange(errorCodes);
         }
+
     }
 }

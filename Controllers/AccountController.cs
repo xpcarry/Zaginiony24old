@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Zaginiony24.Infrastructure;
 using Zaginiony24.Models;
+using Zaginiony24.Models.Biding;
+using Zaginiony24.Models.View;
 
 namespace Zaginiony24.Controllers
 {
@@ -16,15 +19,74 @@ namespace Zaginiony24.Controllers
     public class AccountController : Zaginiony24BaseController<AccountController>
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IJwtGenerator _jwtGenerator;
 
-        public AccountController(ILogger<AccountController> logger, 
+
+        public AccountController(ILogger<AccountController> logger,
             UserManager<AppUser> userManager,
-            RoleManager<Role> roleManager) 
+            SignInManager<AppUser> signInManager,
+            IJwtGenerator jwtGenerator)
             : base(logger)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
+            _signInManager = signInManager;
+            _jwtGenerator = jwtGenerator;
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody]LoginBm query)
+        {
+
+            var user = await _userManager.FindByEmailAsync(query.Email);
+            if (user == null)
+            {
+                return BadRequest(new ApiResult<string>(ErrorCodes.InvalidUserName));
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
+
+            if (result.Succeeded)
+            {
+                return Ok(new ApiResult<User>
+                {
+                    Result = new User
+                    {
+                        Username = user.UserName,
+                        Email = user.Email,
+                        AccessToken = _jwtGenerator.CreateToken(user)
+                    }
+                });
+            }
+            return Unauthorized(new ApiResult<string>(ErrorCodes.NoAccess));
+        }
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody]RegisterBm model)
+        {
+            if (await _userManager.FindByEmailAsync(model.Email) != null)
+                return BadRequest(new ApiResult<string>(ErrorCodes.UserWithThisEmailAlreadyExists));
+
+            if (await _userManager.FindByNameAsync(model.Username) != null)
+                return BadRequest(new ApiResult<string>(ErrorCodes.UserWithThisUsernameAlreadyExists));
+
+            if (!model.Password.Equals(model.ConfirmPassword))
+                return BadRequest(new ApiResult<string>(ErrorCodes.PasswordDoNotMatch));
+
+            var user = new AppUser
+            {
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                UserName = model.Username,
+                Name = model.Name,
+                Surname = model.Surname,
+                DateJoined = DateTime.Now
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+                return BadRequest(new ApiResult<string>(result.Errors.First().ToString()));
+            return Created("", result);
         }
     }
 }

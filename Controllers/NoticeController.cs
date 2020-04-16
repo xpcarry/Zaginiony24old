@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Zaginiony24.Infrastructure;
 using Zaginiony24.ModelRepositories;
+using Zaginiony24.Models;
 
 namespace Zaginiony24.Controllers
 {
@@ -21,6 +22,15 @@ namespace Zaginiony24.Controllers
             : base(logger)
         {
             _noticeRepository = noticeRepository;
+        }
+
+        [HttpGet("ListAll")]
+        public async Task<IActionResult> ListAll()
+        {
+            var result = await _noticeRepository.GetAllNoticies();
+            if (result == null)
+                return BadRequest(new ApiResult<dynamic>(ErrorCodes.CannotFindAnyNotice));
+            return Ok(new ApiResult<List<Notice>> {Result = result});
         }
     }
 }
