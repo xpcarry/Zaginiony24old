@@ -1,26 +1,87 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
+import Notice from "./Notice";
+import style from "../styles/home.module.css";
+import {
+  Divider,
+  Header,
+  Segment,
+  Dropdown,
+  Form,
+  Button,
+} from "semantic-ui-react";
 
-export class Home extends Component {
-  static displayName = Home.name;
+const Home = () => {
+  const [noticies, setNoticies] = useState([]);
+  const [gender, setGender] = useState("");
 
-  render () {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+  useEffect(() => {
+    getNoticies();
+  }, []);
+
+  const getNoticies = async () => {
+    const response = await fetch(`api/home?gender=${gender}`);
+    const data = await response.json();
+    if (data.isSuccess === true) {
+      setNoticies(data.result);
+    }
+  };
+
+  const updateGender = (event, { value }) => {
+    setGender(value);
+  };
+
+  const genderOptions = [
+    {
+      key: "kobieta",
+      text: "Kobieta",
+      value: "Kobieta",
+    },
+    {
+      key: "mezczyzna",
+      text: "Mężczyzna",
+      value: "Mężczyzna",
+    },
+  ];
+
+  return (
+    <div>
+      <h2>Rejestr osób zaginionych</h2>
+      <p>
+        Dzięki bazie można sprawdzić, czy dana osoba została zgłoszona jako
+        zaginiona. Aby przeszukać nasze zasoby, w odpowiednie pola wpisz
+        dostępne informacje.
+      </p>
+      <Segment>
+        <Header as="h4">Filtruj osoby</Header>
+        <Form onSubmit={getNoticies}>
+          <Dropdown
+            style={{ marginRight: 20 }}
+            label="dsadas"
+            placeholder="Wybierz płeć"
+            selection
+            options={genderOptions}
+            onChange={updateGender}
+          />
+          <Button type="submit">Zastosuj</Button>
+        </Form>
+      </Segment>
+      <Divider horizontal>
+        <Header as="h4">Osoby Zaginione</Header>
+      </Divider>
+      <div className={style.noticeContainer}>
+        {noticies.map((notice) => (
+          <Notice
+            key={notice.id}
+            name={notice.name}
+            surname={notice.surname}
+            date={notice.date}
+            gender={notice.gender}
+            age={notice.age}
+            lastseenplace={notice.lastSeenPlace}
+          />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+export default Home;

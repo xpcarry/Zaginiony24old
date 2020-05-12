@@ -32,14 +32,14 @@ namespace Zaginiony24
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
 
-            services.AddTransient<INoticeRepository, NoticeRepository>();
+            services.AddScoped<INoticeRepository, NoticeRepository>();
             services.AddControllersWithViews().AddFluentValidation(fv 
                 => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            services.
+                AddDefaultIdentity<AppUser>().
+                AddRoles<Role>().
+                AddEntityFrameworkStores<ApplicationDbContext>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

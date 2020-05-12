@@ -10,5 +10,6 @@ namespace Zaginiony24.ModelRepositories
     {
         Task<Notice> GetAsync(Guid noticeId);
         Task<List<Notice>> GetAllNoticies();
+        Task<List<Notice>> GetByGender(string gender);
     }
 }

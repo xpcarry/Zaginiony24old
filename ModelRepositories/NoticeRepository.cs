@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Zaginiony24.Models;
@@ -44,6 +45,11 @@ namespace Zaginiony24.ModelRepositories
         public async Task<List<Notice>> GetAllNoticies()
         {
             return await _context.Notices.ToListAsync();
+        }
+
+        public async Task<List<Notice>> GetByGender(string gender)
+        {
+            return await _context.Notices.Where(n => n.Gender == gender).ToListAsync();
         }
     }
 }

@@ -28,18 +28,23 @@ export class NavMenu extends Component {
           <Container>
             <NavbarBrand tag={Link} to="/">Zaginiony24</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+            <Collapse className="d-sm-inline-flex flex-sm-row-reverse justify-content-between" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/">Zgłoś zaginięcie</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/">Zaloguj</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/">Zarejestruj</NavLink>
                 </NavItem>
-              </ul>
+                </ul>
+                <ul className="navbar-nav flex-grow">
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/">Strona główna</NavLink>
+                </NavItem>
+                </ul>
             </Collapse>
           </Container>
         </Navbar>

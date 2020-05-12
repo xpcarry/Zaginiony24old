@@ -24,6 +24,9 @@ namespace Zaginiony24.Models
             builder.Entity<AppUser>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
+            builder.Entity<Role>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
         }
         public DbSet<Notice> Notices { get; set; }
     }

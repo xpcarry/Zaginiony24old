@@ -7,6 +7,7 @@ namespace Zaginiony24.Models
         public Guid NoticeId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Gender { get; set; }
         public string City { get; set; }
         public string District { get; set; }
         public DateTime DateOfDisappearance { get; set; }
