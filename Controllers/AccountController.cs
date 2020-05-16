@@ -21,17 +21,34 @@ namespace Zaginiony24.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtGenerator _jwtGenerator;
+        private readonly IUserAccessor _userAccessor;
 
 
         public AccountController(ILogger<AccountController> logger,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IJwtGenerator jwtGenerator)
+            IJwtGenerator jwtGenerator,
+            IUserAccessor userAccessor)
             : base(logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtGenerator = jwtGenerator;
+            _userAccessor = userAccessor;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        { 
+            var appUser = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+            var user = new User
+            {
+                Username = appUser.UserName,
+                Email = appUser.Email,
+                AccessToken = _jwtGenerator.CreateToken(appUser)
+            };
+            
+            return Ok(new ApiResult<User> {Result = user});
         }
 
         [HttpPost("Login")]

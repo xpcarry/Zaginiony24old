@@ -36,10 +36,10 @@ namespace Zaginiony24
             services.AddControllersWithViews().AddFluentValidation(fv 
                 => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
-            services.
-                AddDefaultIdentity<AppUser>().
-                AddRoles<Role>().
-                AddEntityFrameworkStores<ApplicationDbContext>();
+            services
+                .AddDefaultIdentity<AppUser>()
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -55,6 +55,7 @@ namespace Zaginiony24
                 });
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
