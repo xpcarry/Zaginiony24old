@@ -1,54 +1,39 @@
 import React, { useState, useEffect, useContext, SyntheticEvent } from 'react';
 import Notice from './Notice';
-import style from '../styles/home.module.css';
-import {Divider, Header, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
+import style from '../styles/home.module.scss';
+import { Divider, Header, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
 import agent from '../api/agent';
-import {RootStoreContext} from '../stores/rootStore';
+import { RootStoreContext } from '../stores/rootStore';
 import { INotice } from '../models/notice';
+import { genderOptions, districtOptions } from '../form/options/options';
 
 
 const Home = () => {
   const rootStore = useContext(RootStoreContext);
-  const {isLoggedIn, user} = rootStore.userStore;
+  const { isLoggedIn, user } = rootStore.userStore;
 
   const [noticies, setNoticies] = useState([]);
   const [gender, setGender] = useState("");
+  const [district, setDistrict] = useState("");
 
   useEffect(() => {
     getNoticies();
+    districtOptions.unshift({key:'wszystkie', value:'', text:'wszystkie'})
   }, []);
 
   const getNoticies = async () => {
-    agent.Noticies.list(gender)
-    .then(response =>{
-      console.log(response);
-      if (response){
-        setNoticies(response);
-      }
-    });
+    agent.Noticies.list(gender, district)
+      .then(response => {
+        console.log(response);
+        if (response) {
+          setNoticies(response);
+        }
+      });
   };
 
-  const updateGender = (event:any, { value }:any) => {
+  const updateGender = (event: any, { value }: any) => {
     setGender(value);
   };
-
-  const genderOptions = [
-    {
-      key: "kobieta",
-      text: "Kobieta",
-      value: "Kobieta",
-    },
-    {
-      key: "mezczyzna",
-      text: "Mężczyzna",
-      value: "Mężczyzna",
-    },
-    {
-      key: "wszyscy",
-      text: "Wszyscy",
-      value: "",
-    },
-  ];
 
   return (
     <div>
@@ -63,11 +48,18 @@ const Home = () => {
         <Form onSubmit={getNoticies}>
           <Dropdown
             style={{ marginRight: 20 }}
-            label="dsadas"
             placeholder="Wybierz płeć"
             selection
             options={genderOptions}
             onChange={updateGender}
+          />
+          <Dropdown
+            style={{ marginRight: 20 }}
+            placeholder="Województwo"
+            selection
+            search={true}
+            options={districtOptions}
+            onChange={() => (e:any, {value}:any) => {setDistrict(value)}}
           />
           <Button type="submit">Zastosuj</Button>
         </Form>
@@ -76,7 +68,7 @@ const Home = () => {
         <Header as="h4">Osoby Zaginione</Header>
       </Divider>
       <div className={style.noticeContainer}>
-        {noticies.map((notice:INotice) => (
+        {noticies.map((notice: INotice) => (
           <Notice key={notice.id} notice={notice}
           />
         ))}

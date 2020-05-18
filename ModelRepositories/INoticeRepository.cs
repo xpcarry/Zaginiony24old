@@ -9,7 +9,7 @@ namespace Zaginiony24.ModelRepositories
     public interface INoticeRepository : IRepository<Notice>
     {
         Task<Notice> GetAsync(Guid noticeId);
-        Task<List<Notice>> GetAllNoticies();
+        Task<List<Notice>> GetAllNotices();
         Task<List<Notice>> GetByGender(string gender);
     }
 }

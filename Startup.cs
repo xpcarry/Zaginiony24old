@@ -33,7 +33,9 @@ namespace Zaginiony24
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
 
             services.AddScoped<INoticeRepository, NoticeRepository>();
-            services.AddControllersWithViews().AddFluentValidation(fv 
+            services.AddControllersWithViews()
+                .AddJsonOptions(options => { options.JsonSerializerOptions.MaxDepth = 64; })
+                .AddFluentValidation(fv 
                 => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services

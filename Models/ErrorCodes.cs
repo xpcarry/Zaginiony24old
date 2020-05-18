@@ -23,5 +23,6 @@
         public static string PasswordDoNotMatch = "42014";
 
         public static string CannotFindAnyNotice = "43001";
+        public static string InvalidNoticeId = "43002";
     }
 }

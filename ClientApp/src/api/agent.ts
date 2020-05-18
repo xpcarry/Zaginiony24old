@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { IUserFormValues, IUser } from '../models/user';
+import { INotice } from '../models/notice';
+import { IDetails } from '../models/details';
 
 
 axios.interceptors.request.use((config) => {
@@ -35,8 +37,9 @@ const requests = {
 };
 
 const Noticies = {
-    list: (gender:string) => requests.get(`/api/home?gender=${gender}`),
-    details: (id:string) => requests.get(`/api/noticies/${id}`)
+    list: (gender:string, district:string) => requests.get(`/api/home?gender=${gender}?district${district}`),
+    details: (id:string):Promise<IDetails> => requests.get(`/api/notice/details?id=${id}`),
+    add: (notice:INotice) => requests.post('/api/notice/add', notice)
 };
 
 const User = {

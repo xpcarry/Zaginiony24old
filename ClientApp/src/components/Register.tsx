@@ -5,14 +5,17 @@ import TextInput from '../form/TextInput';
 import { RootStoreContext } from '../stores/rootStore';
 import { IUserFormValues } from '../models/user';
 import { FORM_ERROR } from 'final-form';
-import { combineValidators, isRequired } from 'revalidate';
+import { combineValidators, isRequired, composeValidators, matchesField, isNumeric } from 'revalidate';
 import ErrorMessage from '../form/ErrorMessage';
 
 const validate = combineValidators({
     username: isRequired('Username'),
     displayName: isRequired('DisplayName'),
     email: isRequired('Email'),
-    password: isRequired('Password')
+    password: isRequired({message:'Wpisz hasło'}),
+    confirmPassword: composeValidators(
+        isRequired({message:'Potwierdź hasło'}),
+        matchesField('password', 'confirmPassword'))
 });
 
 const Register = () => {

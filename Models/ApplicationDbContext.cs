@@ -14,13 +14,15 @@ namespace Zaginiony24.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<Notice>()
-                .HasOne(e => e.User);
+                .HasOne(n => n.AppUser)
+                .WithMany(a => a.Notices)
+                .HasForeignKey(n => n.AppUserId);
 
             builder.Entity<Notice>()
                 .Property(p => p.NoticeId)
                 .ValueGeneratedOnAdd();
-
             builder.Entity<AppUser>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();

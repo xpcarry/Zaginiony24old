@@ -42,7 +42,7 @@ namespace Zaginiony24.ModelRepositories
             return await _context.Notices.FirstOrDefaultAsync(n => n.NoticeId.Equals(noticeId));
         }
 
-        public async Task<List<Notice>> GetAllNoticies()
+        public async Task<List<Notice>> GetAllNotices()
         {
             return await _context.Notices.ToListAsync();
         }

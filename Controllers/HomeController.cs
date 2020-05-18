@@ -30,7 +30,7 @@ namespace Zaginiony24.Controllers
         {
             var noticies = new List<Notice>();
             if (string.IsNullOrEmpty(gender))
-                noticies = await _noticeRepository.GetAllNoticies();
+                noticies = await _noticeRepository.GetAllNotices();
             else
                 noticies = await _noticeRepository.GetByGender(gender);
 
@@ -43,7 +43,7 @@ namespace Zaginiony24.Controllers
                     Id = notice.NoticeId,
                     Name = notice.Name,
                     Surname = notice.Surname,
-                    Date = notice.DateOfDisappearance.ToShortDateString(),
+                    DateOfDisappearance = notice.DateOfDisappearance.ToShortDateString(),
                     Gender = notice.Gender,
                     Age = notice.Age,
                     LastSeenPlace = notice.LastSeenPlace

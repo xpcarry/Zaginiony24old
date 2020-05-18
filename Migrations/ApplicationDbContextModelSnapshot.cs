@@ -211,6 +211,9 @@ namespace Zaginiony24.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -247,12 +250,9 @@ namespace Zaginiony24.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("NoticeId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Notices");
                 });
@@ -260,6 +260,7 @@ namespace Zaginiony24.Migrations
             modelBuilder.Entity("Zaginiony24.Models.Role", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -337,9 +338,9 @@ namespace Zaginiony24.Migrations
 
             modelBuilder.Entity("Zaginiony24.Models.Notice", b =>
                 {
-                    b.HasOne("Zaginiony24.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("Zaginiony24.Models.AppUser", "AppUser")
+                        .WithMany("Notices")
+                        .HasForeignKey("AppUserId");
                 });
 #pragma warning restore 612, 618
         }

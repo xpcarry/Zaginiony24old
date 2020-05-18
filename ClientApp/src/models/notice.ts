@@ -1,3 +1,5 @@
+import { IUser } from "./user";
+
 export interface INotice {
     id: string;
     name: string;
@@ -5,12 +7,13 @@ export interface INotice {
     gender: string;
     city: string;
     district: string;
-    dateOfDisappearance: string;
-    lastseenplace: string;
+    dateOfDisappearance: Date | null;
+    lastSeenPlace: string;
     age: number; 
     height: number;
     eyeColor: string;
     specialCharacters: string;
     description: string;
-    datePosted: string;
+    datePosted: Date | null;
+    user: IUser;
 }

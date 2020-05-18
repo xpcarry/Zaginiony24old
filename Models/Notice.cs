@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Zaginiony24.Models
 {
@@ -18,6 +19,8 @@ namespace Zaginiony24.Models
         public string SpecialCharacters { get; set; }
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
-        public AppUser User { get; set; }
+        public string AppUserId { get; set; }
+        [JsonIgnore]
+        public virtual AppUser AppUser { get; set; }
     }
 }

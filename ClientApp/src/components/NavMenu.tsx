@@ -50,7 +50,7 @@ const NavMenu = () => {
                 <NavLink tag={Link} className="text-dark" to="/">Strona główna</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Zgłoś zaginięcie</NavLink>
+                <NavLink tag={Link} className="text-dark" to="/notice/addnotice">Zgłoś zaginięcie</NavLink>
               </NavItem>
             </ul>
           </Collapse>

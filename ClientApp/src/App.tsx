@@ -1,9 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Layout } from "./components/Layout";
 import Home from "./components/Home";
-import { FetchData } from "./components/FetchData";
 import Login from "./components/Login";
-import { Counter } from "./components/Counter";
 import {
   Route,
   withRouter,
@@ -14,6 +12,9 @@ import { RootStoreContext } from "./stores/rootStore";
 import LoadingComponent from './form/LoadingComponent';
 import { observer } from 'mobx-react-lite';
 import "./custom.css";
+import Register from "./components/Register";
+import NoticeDetails from "./components/NoticeDetails";
+import AddNotice from "./components/AddNotice";
 
 const App: React.FC<RouteComponentProps> = ({location}) => {
   const rootStore = useContext(RootStoreContext);
@@ -33,9 +34,10 @@ const App: React.FC<RouteComponentProps> = ({location}) => {
   return (
     <Layout>
       <Route exact path="/" component={Home} />
-      <Route path="/counter" component={Counter} />
-      <Route path="/fetch-data" component={FetchData} />
       <Route path="/account/login" component={Login} />
+      <Route path="/account/register" component={Register} />
+      <Route path="/notice/details/:id" component={NoticeDetails}/>
+      <Route path="/notice/addnotice/" component={AddNotice}/>
     </Layout>
   );
 };
