@@ -6,8 +6,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {createBrowserHistory} from 'history';
 import { Router } from "react-router-dom";
-import { observerBatching } from "mobx-react-lite/batchingForReactDom"
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+//import { observerBatching } from "mobx-react-lite/batchingForReactDom"
+//import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import dateFnsLocalizer from 'react-widgets-date-fns';
 
 dateFnsLocalizer()

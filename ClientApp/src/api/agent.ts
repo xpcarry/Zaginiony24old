@@ -37,7 +37,7 @@ const requests = {
 };
 
 const Noticies = {
-    list: (gender:string, district:string) => requests.get(`/api/home?gender=${gender}?district${district}`),
+    home: (gender:string, district:string) => requests.get(`/api/home?gender=${gender}&district=${district}`),
     details: (id:string):Promise<IDetails> => requests.get(`/api/notice/details?id=${id}`),
     add: (notice:INotice) => requests.post('/api/notice/add', notice)
 };

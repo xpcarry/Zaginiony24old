@@ -1,26 +1,18 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../form/LoadingComponent';
 import agent from '../api/agent';
 import { Grid, Image, Header, Table, Segment } from 'semantic-ui-react';
-import { INotice } from '../models/notice';
-import style from '../styles/noticeDetails.module.scss';
 import { IDetails } from '../models/details';
-
-interface DetailParams {
-  id: string;
-}
 
 const NoticeDetails = ({
   match,
-  history,
 }: any, ) => {
   const [notice, setNotice] = useState<IDetails>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadNotice(match.params.id);
-  }, [])
+  }, [match.params.id])
 
   const loadNotice = async (id: string) => {
     try {
@@ -48,7 +40,7 @@ const NoticeDetails = ({
           <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
         </Grid.Column>
         <Grid.Column width={9}>
-          <Table very basic>
+          <Table basic>
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Wiek:</Table.Cell>

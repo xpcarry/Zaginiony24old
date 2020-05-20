@@ -16,6 +16,7 @@ const Notice: React.FC<{ notice: INotice }> = ({ notice }) => {
                 <span className={style.age}>Lat: {notice.age}</span><br />
                 <span>Płeć: {notice.gender}</span><br />
                 <span>Miejsce zaginięcia: {notice.lastSeenPlace}</span><br />
+                <span>Województwo: {notice.district}</span><br />
                 <span>Data zaginięcia: {notice.dateOfDisappearance}</span>
             </div>
             </Link>

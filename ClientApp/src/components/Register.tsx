@@ -5,17 +5,17 @@ import TextInput from '../form/TextInput';
 import { RootStoreContext } from '../stores/rootStore';
 import { IUserFormValues } from '../models/user';
 import { FORM_ERROR } from 'final-form';
-import { combineValidators, isRequired, composeValidators, matchesField, isNumeric } from 'revalidate';
+import { combineValidators, isRequired, composeValidators, matchesField } from 'revalidate';
 import ErrorMessage from '../form/ErrorMessage';
 
 const validate = combineValidators({
     username: isRequired('Username'),
-    displayName: isRequired('DisplayName'),
     email: isRequired('Email'),
     password: isRequired({message:'Wpisz hasło'}),
     confirmPassword: composeValidators(
-        isRequired({message:'Potwierdź hasło'}),
-        matchesField('password', 'confirmPassword'))
+        isRequired({ message: 'Potwierdź hasło' }),
+        matchesField('password', '')({message: 'Hasła się nie zgadzają'})
+    )(),
 });
 
 const Register = () => {
@@ -74,11 +74,13 @@ const Register = () => {
                             />
                         )}
                         <Button
-                            disabled={(invalid && !dirtySinceLastSubmit) || pristine}
+                            disabled={(invalid && !dirtySinceLastSubmit) || pristine} 
                             loading={submitting}
-                            content='Zarejestruj'
                             fluid
-                        />
+                            type='submit'
+                        >
+                            Zarejestruj
+                            </Button>
                     </Form>
                 )}
         />

@@ -5,8 +5,7 @@ import Login from "./components/Login";
 import {
   Route,
   withRouter,
-  RouteComponentProps,
-  Switch
+  RouteComponentProps
 } from 'react-router-dom';
 import { RootStoreContext } from "./stores/rootStore";
 import LoadingComponent from './form/LoadingComponent';
@@ -19,7 +18,7 @@ import AddNotice from "./components/AddNotice";
 const App: React.FC<RouteComponentProps> = ({location}) => {
   const rootStore = useContext(RootStoreContext);
   const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
-  const { getUser, isLoggedIn } = rootStore.userStore;
+  const { getUser } = rootStore.userStore;
 
   useEffect(() => {
     if (token) {

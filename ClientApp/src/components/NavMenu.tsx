@@ -8,7 +8,7 @@ import Register from './Register';
 
 const NavMenu = () => {
   const rootStore = useContext(RootStoreContext);
-  const { isLoggedIn, user, logout } = rootStore.userStore;
+  const { user, logout } = rootStore.userStore;
   const { openModal } = rootStore.modalStore;
   const [collapsed, setCollapsed] = useState(true);
 
@@ -37,10 +37,10 @@ const NavMenu = () => {
                 (
                   <ul className="navbar-nav flex-grow">
                     <NavItem>
-                      <NavLink tag={Link} onClick={() => openModal(<Login />)} className="text-dark">Zaloguj</NavLink>
+                      <NavLink tag={Link} onClick={() => openModal(<Login />)} to='#' className="text-dark">Zaloguj</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link}  onClick={() => openModal(<Register />)} className="text-dark">Zarejestruj</NavLink>
+                      <NavLink tag={Link} onClick={() => openModal(<Register />)} to='#' className="text-dark">Zarejestruj</NavLink>
                     </NavItem>
                   </ul>
                 )}
@@ -50,7 +50,12 @@ const NavMenu = () => {
                 <NavLink tag={Link} className="text-dark" to="/">Strona główna</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/notice/addnotice">Zgłoś zaginięcie</NavLink>
+                {user ? (
+                  <NavLink tag={Link} className="text-dark" to="/notice/addnotice">Zgłoś zaginięcie</NavLink>
+                ):(
+                  <NavLink tag={Link} onClick={() => openModal(<Login />)} className="text-dark" to="#">Zgłoś zaginięcie</NavLink>
+                )}
+
               </NavItem>
             </ul>
           </Collapse>

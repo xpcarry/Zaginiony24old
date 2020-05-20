@@ -58,8 +58,16 @@ namespace Zaginiony24.Controllers
             var user = await _userManager.FindByEmailAsync(query.Email);
             if (user == null)
             {
-                return BadRequest(new ApiResult<string>(ErrorCodes.InvalidUserName));
+                return BadRequest(new ApiResult<string>(new {User = ErrorCodes.InvalidUserName}));
             }
+
+            //LoginValidator validator = new LoginValidator();
+            //var validation = validator.Validate(query);
+            //if (!validation.IsValid)
+            //{
+            //    return BadRequest(new ApiResult<string>
+            //        {ErrorCodes = validation.Errors.Select(e => e.ErrorMessage).ToList()});
+            //}
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
 
@@ -82,13 +90,16 @@ namespace Zaginiony24.Controllers
         public async Task<IActionResult> Register([FromBody]RegisterBm model)
         {
             if (await _userManager.FindByEmailAsync(model.Email) != null)
-                return BadRequest(new ApiResult<string>(ErrorCodes.UserWithThisEmailAlreadyExists));
+                return BadRequest(new ApiResult<string>( new
+                {
+                    User = ErrorCodes.UserWithThisEmailAlreadyExists
+                }));
 
             if (await _userManager.FindByNameAsync(model.Username) != null)
-                return BadRequest(new ApiResult<string>(ErrorCodes.UserWithThisUsernameAlreadyExists));
+                return BadRequest(new ApiResult<string>(new {User = ErrorCodes.UserWithThisUsernameAlreadyExists}));
 
             if (!model.Password.Equals(model.ConfirmPassword))
-                return BadRequest(new ApiResult<string>(ErrorCodes.PasswordDoNotMatch));
+                return BadRequest(new ApiResult<string>(new {User =ErrorCodes.PasswordDoNotMatch}));
 
             var user = new AppUser
             {
@@ -102,7 +113,7 @@ namespace Zaginiony24.Controllers
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return BadRequest(new ApiResult<string>(result.Errors.First().ToString()));
+                return BadRequest(new ApiResult<string>(new {User = result.Errors.First().ToString()}));
             return Created("", result);
         }
     }

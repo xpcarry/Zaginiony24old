@@ -47,9 +47,16 @@ namespace Zaginiony24.ModelRepositories
             return await _context.Notices.ToListAsync();
         }
 
-        public async Task<List<Notice>> GetByGender(string gender)
+        public Task<List<Notice>> GetNotices(string gender = null, string district = null)
         {
-            return await _context.Notices.Where(n => n.Gender == gender).ToListAsync();
+            var queryable = _context.Notices.AsQueryable();
+            if (!string.IsNullOrEmpty(gender))
+                queryable = queryable.Where(n => n.Gender.Equals(gender));
+            if (!string.IsNullOrEmpty(district))
+                queryable = queryable.Where(n => n.District.Equals(district));
+
+            return queryable.ToListAsync();
         }
+
     }
 }

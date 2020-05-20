@@ -5,15 +5,15 @@ import { RootStoreContext } from '../stores/rootStore';
 import { IUserFormValues } from '../models/user';
 import TextInput from '../form/TextInput';
 import { FORM_ERROR } from 'final-form';
-import {combineValidators, isRequired} from 'revalidate';
+import { combineValidators, isRequired } from 'revalidate';
 import ErrorMessage from '../form/ErrorMessage';
 import Register from './Register';
 import { Link } from 'react-router-dom';
 
 
 const validate = combineValidators({
-    email: isRequired({message: 'Email jest wymagany'}),
-    password: isRequired({message: 'Hasło jest wymagane'})
+    email: isRequired({ message: 'Email jest wymagany' }),
+    password: isRequired({ message: 'Hasło jest wymagane' })
 });
 
 const Login = () => {
@@ -34,18 +34,26 @@ const Login = () => {
                         color='black'
                         textAlign='center'
                     />
-                    <Field name='email' component={TextInput} placeholder='Adres e-mail' />
+                    <Field 
+                        name='email' 
+                        component={TextInput} 
+                        placeholder='Adres e-mail' 
+                    />
                     <Field
                         name='password'
                         component={TextInput}
                         placeholder='Hasło'
                         type='password'
                     />
-                    Nie masz konta?<Link to='#' style={{color:'black'}} onClick={() => 
-                        {rootStore.modalStore.closeModal(); rootStore.modalStore.openModal(<Register/>)}}> Zarejestruj się!</Link>
-                    <Button style={{marginTop:'10px'}} disabled={(invalid && !dirtySinceLastSubmit) || pristine} loading={submitting} fluid type='submit'>Zaloguj</Button>
-                    {submitError && !dirtySinceLastSubmit && 
-                    <ErrorMessage error={submitError} text='Invalid username or password'/>}
+                    Nie masz konta?<Link to='#' style={{ color: 'black' }} onClick={() => { rootStore.modalStore.closeModal(); rootStore.modalStore.openModal(<Register />) }}> Zarejestruj się!</Link>
+                    <Button 
+                    style={{ marginTop: '10px' }} 
+                    disabled={(invalid && !dirtySinceLastSubmit) || pristine} 
+                    loading={submitting} 
+                    fluid 
+                    type='submit'>Zaloguj</Button>
+                    {submitError && !dirtySinceLastSubmit &&
+                        <ErrorMessage error={submitError} text='Nieprawidłowa nazwa użytkownika lub hasło' />}
                 </Form>
             )}
         />

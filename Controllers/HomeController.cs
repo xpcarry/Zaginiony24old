@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Zaginiony24.Infrastructure;
 using Zaginiony24.ModelRepositories;
 using Zaginiony24.Models;
+using Zaginiony24.Models.Biding;
 using Zaginiony24.Models.View;
 
 namespace Zaginiony24.Controllers
@@ -26,17 +27,17 @@ namespace Zaginiony24.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery]string? gender)
+        public async Task<IActionResult> Index([FromQuery]HomeFilterQuery query)
         {
-            var noticies = new List<Notice>();
-            if (string.IsNullOrEmpty(gender))
-                noticies = await _noticeRepository.GetAllNotices();
+            var notices = new List<Notice>();
+            if (string.IsNullOrEmpty(query.Gender) && string.IsNullOrEmpty(query.District))
+                notices = await _noticeRepository.GetAllNotices();
             else
-                noticies = await _noticeRepository.GetByGender(gender);
+                notices = await _noticeRepository.GetNotices(query.Gender, query.District);
 
             var result = new List<NoticeShortcutVm>();
 
-            foreach (var notice in noticies)
+            foreach (var notice in notices)
             {
                 result.Add(new NoticeShortcutVm
                 {
@@ -46,7 +47,8 @@ namespace Zaginiony24.Controllers
                     DateOfDisappearance = notice.DateOfDisappearance.ToShortDateString(),
                     Gender = notice.Gender,
                     Age = notice.Age,
-                    LastSeenPlace = notice.LastSeenPlace
+                    LastSeenPlace = notice.LastSeenPlace,
+                    District = notice.District
                 });
             }
 

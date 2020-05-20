@@ -1,28 +1,23 @@
-import React, { useState, useEffect, useContext, SyntheticEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import Notice from './Notice';
 import style from '../styles/home.module.scss';
 import { Divider, Header, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
 import agent from '../api/agent';
-import { RootStoreContext } from '../stores/rootStore';
 import { INotice } from '../models/notice';
 import { genderOptions, districtOptions } from '../form/options/options';
 
 
 const Home = () => {
-  const rootStore = useContext(RootStoreContext);
-  const { isLoggedIn, user } = rootStore.userStore;
-
   const [noticies, setNoticies] = useState([]);
   const [gender, setGender] = useState("");
   const [district, setDistrict] = useState("");
 
   useEffect(() => {
     getNoticies();
-    districtOptions.unshift({key:'wszystkie', value:'', text:'wszystkie'})
   }, []);
 
   const getNoticies = async () => {
-    agent.Noticies.list(gender, district)
+    await agent.Noticies.home(gender, district)
       .then(response => {
         console.log(response);
         if (response) {
@@ -33,6 +28,12 @@ const Home = () => {
 
   const updateGender = (event: any, { value }: any) => {
     setGender(value);
+    console.log(value);
+  };
+
+  const updateDistrict = (event: any, { value }: any) => {
+    setDistrict(value);
+    console.log(value);
   };
 
   return (
@@ -59,7 +60,7 @@ const Home = () => {
             selection
             search={true}
             options={districtOptions}
-            onChange={() => (e:any, {value}:any) => {setDistrict(value)}}
+            onChange={updateDistrict}
           />
           <Button type="submit">Zastosuj</Button>
         </Form>

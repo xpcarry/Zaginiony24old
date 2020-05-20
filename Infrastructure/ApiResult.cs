@@ -9,27 +9,12 @@ namespace Zaginiony24.Infrastructure
     public class ApiResult<TResult>
     {
         public TResult Result { get; set; }
-        public List<string> ErrorCodes { get; set; }
-        public bool IsSuccess => ErrorCodes == null || !ErrorCodes.Any();
+        public object Errors { get; set; }
+        public bool IsSuccess => Errors == null;
 
-        public ApiResult()
+        public ApiResult(object errors = null)
         {
-            ErrorCodes = new List<string>();
-        }
-        public ApiResult(string errorCode)
-            :this()
-        {
-            ErrorCodes.Add(errorCode);
-        }
-        public ApiResult(IEnumerable<string> errorCodes)
-            : this()
-        {
-            ErrorCodes.AddRange(errorCodes);
-        }
-        public ApiResult(params string[] errorCodes)
-            : this()
-        {
-            ErrorCodes.AddRange(errorCodes);
+            Errors = errors;
         }
 
     }

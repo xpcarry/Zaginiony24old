@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Text.Json.Serialization;
+using FluentValidation;
 
 namespace Zaginiony24.Models
 {
@@ -22,5 +24,19 @@ namespace Zaginiony24.Models
         public string AppUserId { get; set; }
         [JsonIgnore]
         public virtual AppUser AppUser { get; set; }
+    }
+
+    public class NoticeValidator : AbstractValidator<Notice>
+    {
+        public NoticeValidator()
+        {
+            RuleFor(notice => notice.Name).NotEmpty();
+            RuleFor(notice => notice.Surname).NotEmpty();
+            RuleFor(notice => notice.Gender).NotEmpty();
+            RuleFor(notice => notice.City).NotEmpty();
+            RuleFor(notice => notice.District).NotEmpty();
+            RuleFor(notice => notice.LastSeenPlace).NotEmpty();
+            RuleFor(notice => notice.Age).NotEmpty();
+        }
     }
 }
