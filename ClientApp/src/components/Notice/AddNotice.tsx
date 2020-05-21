@@ -39,7 +39,7 @@ const AddNotice = () => {
     useEffect(() => {
         if (user == null) {
             history.push('/');
-            openModal(<Login />);
+            openModal(<Login />, null);
         }
     }, [openModal, user])
 
@@ -47,7 +47,6 @@ const AddNotice = () => {
         try {
             const notice = await agent.Noticies.add(values)
                 .then(response => {
-                    console.log(response);
                     history.push({
                         pathname: `/notice/details/${response}`,
                     });

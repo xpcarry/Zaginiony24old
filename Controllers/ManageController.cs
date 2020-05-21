@@ -52,7 +52,7 @@ namespace Zaginiony24.Controllers
                             Id = user.Id,
                             Username = user.UserName,
                             Email = user.Email,
-                            CanLogIn = user.LockoutEnabled,
+                            CanLogIn = user.IsActive,
                             NoticesListedCount = user.Notices.Count()
                         });
                 }
@@ -96,7 +96,19 @@ namespace Zaginiony24.Controllers
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser([FromQuery]Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            var user = await _context.Users
+                .Include(u => u.Notices)
+                .Where(u => u.Id == id.ToString())
+                .FirstOrDefaultAsync();
+            var userNotices = user.Notices.ToList();
+
+            if (user.Notices != null)
+            {
+                foreach (var notice in userNotices)
+                {
+                    await _noticeRepository.DeleteAsync(notice);
+                }
+            }
             var result = await _userManager.DeleteAsync(user);
             return Ok(new ApiResult<bool> {Result = result.Succeeded});
         }
@@ -104,9 +116,10 @@ namespace Zaginiony24.Controllers
         [HttpPost("ChangeLockoutStatus")]
         public async Task<IActionResult> ChangeLockoutStatus([FromBody]ChangeLockoutStatusBm request)
         {
-            var user = await _userManager.FindByIdAsync(request.Id.ToString());
-            user.LockoutEnabled = request.CanLogIn;
-            return Ok(new ApiResult<bool> {Result = user.LockoutEnabled});
+            var user = await _userManager.FindByIdAsync(request.Id);
+            user.IsActive = request.CanLogIn;
+            await _userManager.UpdateAsync(user);
+            return Ok(new ApiResult<bool> {Result = user.IsActive});
         }
 
     }

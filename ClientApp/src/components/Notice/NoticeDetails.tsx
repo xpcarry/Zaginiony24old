@@ -18,7 +18,6 @@ const NoticeDetails = ({
     try {
       await agent.Noticies.details(id)
         .then((response: IDetails) => {
-          console.log(response)
           setNotice(response);
         });
       setLoading(false);
@@ -39,7 +38,7 @@ const NoticeDetails = ({
         <Grid.Column width={4}>
           <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
         </Grid.Column>
-        <Grid.Column width={9}>
+        <Grid.Column width={8}>
           <Table basic>
             <Table.Body>
               <Table.Row>
@@ -77,11 +76,11 @@ const NoticeDetails = ({
             {notice.notice.description}
           </Segment>
         </Grid.Column>
-        <Grid.Column width={3}>
-          <Segment style={{textAlign:'center'}}>
+        <Grid.Column width={4}>
+          <Segment padded style={{textAlign:'center'}}>
             <b>Ogłoszenie zamieszczone</b> <br/> {notice.notice.datePosted!.toString().split('T')[0]}
           </Segment>
-          <Segment style={{textAlign:'center'}}>
+          <Segment padded style={{textAlign:'center'}}>
             <b>Dane użytkownika</b><br/>
             {notice.user.name}<br/>
             {notice.user.username}<br/>

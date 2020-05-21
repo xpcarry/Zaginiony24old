@@ -27,7 +27,8 @@ namespace Zaginiony24.Models
                             UserName = "admin",
                             Name = "Bartek",
                             Surname = "Losowy",
-                            DateJoined = DateTime.Now
+                            DateJoined = DateTime.Now,
+                            IsActive = true
                         },
                         new AppUser
                         {
@@ -38,7 +39,74 @@ namespace Zaginiony24.Models
                             UserName = "testowyUser",
                             Name = "Robert",
                             Surname = "Smolinski",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
+                        },
+                        new AppUser
+                        {
+                            Email = "andzelika@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "524936355",
+                            UserName = "ruczaja",
+                            Name = "Andzelika",
+                            Surname = "Ruczaj",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
+                        },
+                        new AppUser
+                        {
+                            Email = "franciszek995@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "668745294",
+                            UserName = "majfranciszek",
+                            Name = "Franciszek",
+                            Surname = "Maj",
                             DateJoined = DateTime.Now
+                        },
+                        new AppUser
+                        {
+                            Email = "wolna.alicja@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "576933090",
+                            UserName = "alicjaw",
+                            Name = "Alicja",
+                            Surname = "Wolna",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
+                        },
+                        new AppUser
+                        {
+                            Email = "ernest.takos@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "782262485",
+                            UserName = "takos932",
+                            Name = "Ernest",
+                            Surname = "Takos",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
+
+                        },
+                        new AppUser
+                        {
+                            Email = "nadia.kutrapali@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "839576722",
+                            UserName = "nadiia",
+                            Name = "Nadia",
+                            Surname = "Kutrapali",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
+                        },
+                        new AppUser
+                        {
+                            Email = "robert.smolinski@zaginiony24.pl",
+                            EmailConfirmed = true,
+                            PhoneNumber = "635796411",
+                            UserName = "robertsm",
+                            Name = "Robert",
+                            Surname = "Smolinski",
+                            DateJoined = DateTime.Now,
+                            IsActive = true
                         }
                     };
 
@@ -51,7 +119,7 @@ namespace Zaginiony24.Models
                         }
                     }
 
-                    await roleManager.CreateAsync(new Role {Name = "Administrator"});
+                    await roleManager.CreateAsync(new Role { Name = "Administrator" });
 
                     try
                     {
@@ -84,6 +152,7 @@ namespace Zaginiony24.Models
                             Description =
                                 "W dniu zaginięcia miał duży zarost. Ubrany był w czarne dresy i bluzkę z napisem. Na sobie miał brązową kurtkę i wiązane buty tego samego koloru.",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
@@ -101,13 +170,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "W 23-latka wyszła ze swojego miejsca zamieszkania w Warszawie i dotąd nie wróciła. Nie nawiązała też kontaktu z rodziną. Policja opublikowała na swojej stronie internetowej zdjęcie zaginionej.",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("robertsm")
                         },
                         new Notice
                         {
                             Name = "Łukasz",
                             Surname = "Malisz",
                             City = "Opole",
-                            District = "Opolskie",
+                            District = "opolskie",
                             Gender = "Mężczyzna",
                             DateOfDisappearance = new DateTime(2019, 12, 29),
                             LastSeenPlace = "Opole",
@@ -118,13 +188,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "Poszukiwany mężczyzna jest chory na szichofrenie, wyszedł z domu o godzinie 15:20 Ostatni raz był widziany na kamerach w centrum miasta o 16:08, Zmartwiona rodzina błaga o pomoc.",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("nadiia")
                         },
                         new Notice
                         {
                             Name = "Małgosia",
                             Surname = "Wichura",
                             City = "Kraków",
-                            District = "Małopolskie",
+                            District = "małopolskie",
                             Gender = "Kobieta",
                             DateOfDisappearance = new DateTime(2020, 03, 12),
                             LastSeenPlace = "Kraków",
@@ -135,13 +206,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "Ostatni raz widziana w krakowie na dworcu, nikogo nie poinformowała dokąd jedzie, ",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
                             Name = "Michał",
                             Surname = "Piskorz",
                             City = "Gdańsk",
-                            District = "Pomorskie",
+                            District = "pomorskie",
                             Gender = "Mężczyzna",
                             DateOfDisappearance = new DateTime(2018, 06, 03),
                             LastSeenPlace = "Warszawa",
@@ -152,13 +224,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "Mężczyzna widziany po raz ostatni o 21:37 na plaży w towarzytwie 3 innych osob. Policja posiada zdjęcia umożliwiające identyfikacje",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("ruczaja")
                         },
                         new Notice
                         {
                             Name = "Karolina",
                             Surname = "Nowak",
                             City = "Łódź",
-                            District = "Łódzkie",
+                            District = "łódzkie",
                             Gender = "Kobieta",
                             DateOfDisappearance = new DateTime(2009, 11, 01),
                             LastSeenPlace = "Skierniewice",
@@ -169,6 +242,7 @@ namespace Zaginiony24.Models
                             Description =
                                 "Młoda mieszkana Łodzi wyjechała na cmentarz w Skieniewicach i z niego nie wrociła. Zaniepokojona rodzina prosi o pomoc",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
@@ -186,13 +260,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "Mężczyzna wyszedł z domu o godznie 8:00 ostatni raz widziany jak wysiadał z pociągu na dworcu Waszawa śródmieście o godznie 8:42. Policja prosi o pomoc w odnalezneniu zaginionego",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("takos932")
                         },
                         new Notice
                         {
                             Name = "Krzystof",
                             Surname = "Czikita",
                             City = "Świnoujście",
-                            District = "Zachodniopomorskie",
+                            District = "zachodniopomorskie",
                             Gender = "Mężczyzna",
                             DateOfDisappearance = new DateTime(2018, 09, 21),
                             LastSeenPlace = "Szczecin",
@@ -203,6 +278,7 @@ namespace Zaginiony24.Models
                             Description =
                                 "Rodzina Prosi o pomoc w odnalezieniu syna. Ostatni raz widziany w galerii handlowej w Szczecinie",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
@@ -220,13 +296,14 @@ namespace Zaginiony24.Models
                             Description =
                                 "23-latka wyszła ze swojego miejsca zamieszkania w Warszawie i dotąd nie wróciła. Nie nawiązała też kontaktu z rodziną. Policja opublikowała na swojej stronie internetowej zdjęcie zaginionej.",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
                             Name = "Aniela",
                             Surname = "Grey",
                             City = "Bolesławiec",
-                            District = "Dolnośląskie",
+                            District = "dolnośląskie",
                             Gender = "Kobieta",
                             DateOfDisappearance = new DateTime(2019, 02, 28),
                             LastSeenPlace = "Wrocław",
@@ -237,6 +314,7 @@ namespace Zaginiony24.Models
                             Description =
                                 "Poszukiwana wyjechała służbowo do wrocławia o 18:00 wymeldowała się z hotelu i nie wrociła do domu.",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
@@ -253,6 +331,7 @@ namespace Zaginiony24.Models
                             SpecialCharacters = "brak 3 palców u lewej ręki",
                             Description = "Mężczyzna po kłótni z żoną wyszedł i nie wrocił do domu",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         },
                         new Notice
                         {
@@ -269,13 +348,10 @@ namespace Zaginiony24.Models
                             SpecialCharacters = "tatuaż w kształcie węża na lewym udzie",
                             Description = "Młoda kobieta wyszła na zakupy i nie wrociła. Rodzina błaga o pomoc",
                             DatePosted = DateTime.Now,
+                            AppUser = await userManager.FindByNameAsync("testowyUser")
                         }
                     };
-                    var user = await userManager.FindByNameAsync("testowyUser");
-                    foreach (var notice in list)
-                    {
-                        notice.AppUser = user;
-                    }
+
                     context.Notices.AddRange(list);
                     context.SaveChanges();
                 }

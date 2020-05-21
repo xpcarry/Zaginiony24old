@@ -18,6 +18,7 @@
         public static string UserWithThisEmailAlreadyExists = "Użytkownik z takim adresem e-mail nazwą już istnieje";
         public static string UserWithThisUsernameAlreadyExists = "Użytkownik z taką nazwą już istnieje";
         public static string PasswordDoNotMatch = "Hasła się nie zgadzają";
+        public static string AccountLocked = "Konto jest obecnie zablokowane, skontaktuj się z administratorem systemu.";
 
         public static string CannotFindAnyNotice = "Nie można znaleźć żadnego ogłoszenia";
         public static string InvalidNoticeId = "Nieprawidłowe Id ogłoszenia";

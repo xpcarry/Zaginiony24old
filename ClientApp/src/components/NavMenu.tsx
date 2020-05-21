@@ -41,10 +41,10 @@ const NavMenu = () => {
                 (
                   <ul className="navbar-nav flex-grow">
                     <NavItem>
-                      <NavLink tag={Link} onClick={() => openModal(<Login />)} to='#' className="text-dark">Zaloguj</NavLink>
+                      <NavLink tag={Link} onClick={() => openModal(<Login />, null)} to='#' className="text-dark">Zaloguj</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link} onClick={() => openModal(<Register />)} to='#' className="text-dark">Zarejestruj</NavLink>
+                      <NavLink tag={Link} onClick={() => openModal(<Register />, null)} to='#' className="text-dark">Zarejestruj</NavLink>
                     </NavItem>
                   </ul>
                 )}
@@ -57,7 +57,7 @@ const NavMenu = () => {
                 {user ? (
                   <NavLink tag={Link} className="text-dark" to="/notice/addnotice">Zgłoś zaginięcie</NavLink>
                 ) : (
-                    <NavLink tag={Link} onClick={() => openModal(<Login />)} className="text-dark" to="#">Zgłoś zaginięcie</NavLink>
+                    <NavLink tag={Link} onClick={() => openModal(<Login />, null)} className="text-dark" to="#">Zgłoś zaginięcie</NavLink>
                   )}
               </NavItem>
               {user && isAdmin && (

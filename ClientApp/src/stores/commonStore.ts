@@ -11,8 +11,6 @@ export default class CommonStore {
             token => {
                 if (token) {
                     window.localStorage.setItem('jwt', token);
-                    console.log('token from commonStore');
-                    console.log(token);
                 } else {
                     window.localStorage.removeItem('jwt');
                 }
@@ -25,7 +23,6 @@ export default class CommonStore {
 
     @action setToken = (token: string | null) => {
         this.token = token;
-        console.log(token);
     }
 
     @action setAppLoaded = () => {

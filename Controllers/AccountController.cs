@@ -62,13 +62,10 @@ namespace Zaginiony24.Controllers
                 return BadRequest(new ApiResult<string>(new {User = ErrorCodes.InvalidUserName}));
             }
 
-            //LoginValidator validator = new LoginValidator();
-            //var validation = validator.Validate(query);
-            //if (!validation.IsValid)
-            //{
-            //    return BadRequest(new ApiResult<string>
-            //        {ErrorCodes = validation.Errors.Select(e => e.ErrorMessage).ToList()});
-            //}
+            if (user.IsActive == false)
+            {
+                return BadRequest(new ApiResult<string>(new {User = ErrorCodes.AccountLocked}));
+            }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
 
@@ -109,7 +106,8 @@ namespace Zaginiony24.Controllers
                 UserName = model.Username,
                 Name = model.Name,
                 Surname = model.Surname,
-                DateJoined = DateTime.Now
+                DateJoined = DateTime.Now,
+                IsActive = true,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

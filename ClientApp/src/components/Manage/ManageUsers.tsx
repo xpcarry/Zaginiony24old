@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import agent from '../../api/agent';
-import { Table, Checkbox, Icon, Popup } from 'semantic-ui-react';
+import { Table, Checkbox, Icon, Popup, Button } from 'semantic-ui-react';
 import { IUserSettings } from '../../models/user';
 import LoadingComponent from '../../form/LoadingComponent';
+import { RootStoreContext } from '../../stores/rootStore';
 
 
 const ManageUsers = () => {
 
+    const rootStoreContext = useContext(RootStoreContext);
+    const { openModal, closeModal } = rootStoreContext.modalStore;
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -19,7 +22,6 @@ const ManageUsers = () => {
     const getUsers = async () => {
         await agent.User.getuserslist()
             .then(response => {
-                console.log(response);
                 setUsers(response);
             })
             .catch(error => {
@@ -27,21 +29,41 @@ const ManageUsers = () => {
             })
     };
 
-    const handleDelete = async (e:any, {value}:any) => {
-        console.log(value);
-        await agent.User.deleteUser(value)
-            .then(response => {
-            }).catch(error =>{
-                console.log(error);
-            })
-            getUsers();
+    const handleDelete = (e: any, { value }: any) => {
+        openModal(
+        <p>Wszystkie powiązane ogłoszenia zostaną usunięte, czy na pewno chcesz usunąć użytkownika? </p>,
+            <Fragment>
+                <Button
+                    negative
+                    onClick = {closeModal}
+                >
+                    Nie
+                    </Button>
+                <Button
+                    positive
+                    icon='checkmark'
+                    labelPosition='right'
+                    content='Tak'
+                    value = {value}
+                    onClick = {deleteUser}
+                />
+            </Fragment>)
     };
 
-    const handleLockoutUser = async (e:any, {value, checked}:any) => {
+    const deleteUser = async (e: any, { value }:any) => {
+        await agent.User.deleteUser(value)
+        .then(response => {
+        }).catch(error => {
+            console.log(error);
+        })
+        closeModal();
+        getUsers();
+    }
+
+    const handleLockoutUser = async (e: any, { value, checked }: any) => {
         const user = {} as IUserSettings;
         user.id = value;
         user.canLogIn = checked;
-        console.log(user);
         await agent.User.changeLockoutStatus(user)
             .then(response => {
                 checked = response;
@@ -73,9 +95,9 @@ const ManageUsers = () => {
                         <Table.Cell textAlign='center'>
                             <Checkbox toggle value={user.id} defaultChecked={user.canLogIn} onChange={handleLockoutUser} />
                         </Table.Cell>
-                        <Table.Cell textAlign='center'>                           
+                        <Table.Cell textAlign='center'>
                             <Popup content='Usuń użytkownika' trigger={
-                            <Icon value={user.id} onClick={handleDelete} name='user delete' style={{cursor:'pointer'}}/>
+                                <Icon value={user.id} onClick={handleDelete} name='user delete' style={{ cursor: 'pointer' }} />
                             } />
                         </Table.Cell>
                     </Table.Row>

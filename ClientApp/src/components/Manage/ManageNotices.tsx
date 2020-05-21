@@ -18,7 +18,6 @@ const ManageNotices = () =>{
     const getNotices = async () => {
         await agent.Noticies.listall()
             .then(response => {
-                console.log(response);
                 setNotices(response);
             })
             .catch(error => {
@@ -27,10 +26,8 @@ const ManageNotices = () =>{
     };
 
     const handleDelete = async (e:any, {value}:any) => {
-        console.log(value);
         await agent.Noticies.deleteNotice(value)
             .then(response => {
-                console.log(response);
             })
             getNotices();
     };
