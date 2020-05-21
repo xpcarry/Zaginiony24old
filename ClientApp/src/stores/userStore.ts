@@ -16,6 +16,9 @@ export default class UserStore{
     @computed get isLoggedIn() {
         return !!this.user;
       }
+    @computed get isAdmin(){
+      return this.user?.isAdmin;
+    }
 
     @action login = async (values: IUserFormValues) => {
         try {
@@ -23,7 +26,6 @@ export default class UserStore{
           runInAction(() => {
             this.user = user;
           });
-          console.log(user);
           this.rootStore.commonStore.setToken(user.accessToken);
           this.rootStore.modalStore.closeModal();
           history.push('/');
@@ -48,9 +50,6 @@ export default class UserStore{
           const user = await agent.User.current();
           runInAction(() => {
             this.user = user;
-            console.log('user fron ria getuser');
-            console.log(this.user);
-            console.log(user);
           });
         } catch (error) {
           console.log(error);

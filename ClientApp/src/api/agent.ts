@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { IUserFormValues, IUser } from '../models/user';
-import { INotice } from '../models/notice';
+import { IUserFormValues, IUser, IUserSettings } from '../models/user';
+import { INotice, IManageNotice } from '../models/notice';
 import { IDetails } from '../models/details';
 
 
@@ -39,13 +39,18 @@ const requests = {
 const Noticies = {
     home: (gender:string, district:string) => requests.get(`/api/home?gender=${gender}&district=${district}`),
     details: (id:string):Promise<IDetails> => requests.get(`/api/notice/details?id=${id}`),
-    add: (notice:INotice) => requests.post('/api/notice/add', notice)
+    add: (notice:INotice) => requests.post('/api/notice/add', notice),
+    deleteNotice: (id: string):Promise<string> => requests.del(`api/manage/deletenotice?id=${id}`),
+    listall: () => requests.get(`api/manage/listallnotices`)
 };
 
 const User = {
     current: ():Promise<IUser> => requests.get('api/account'),
     login: (user:IUserFormValues):Promise<IUser> => requests.post('api/account/login', user),
     register: (user:IUserFormValues):Promise<IUser> => requests.post('api/account/register', user),
+    getuserslist: () => requests.get('api/manage/getuserslist'),
+    deleteUser: (id: string):Promise<boolean> => requests.del(`api/manage/deleteuser?id=${id}`),
+    changeLockoutStatus: (user: IUserSettings):Promise<boolean> => requests.post('api/manage/changelockoutstatus', user)
 }
 
 export default{

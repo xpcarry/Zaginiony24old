@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import LoadingComponent from '../form/LoadingComponent';
-import agent from '../api/agent';
+import LoadingComponent from '../../form/LoadingComponent';
+import agent from '../../api/agent';
 import { Grid, Image, Header, Table, Segment } from 'semantic-ui-react';
-import { IDetails } from '../models/details';
+import { IDetails } from '../../models/details';
 
 const NoticeDetails = ({
   match,

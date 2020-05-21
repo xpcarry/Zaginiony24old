@@ -45,7 +45,8 @@ namespace Zaginiony24.Controllers
             {
                 Username = appUser.UserName,
                 Email = appUser.Email,
-                AccessToken = _jwtGenerator.CreateToken(appUser)
+                AccessToken = await _jwtGenerator.CreateToken(appUser),
+                IsAdmin = await _userManager.IsInRoleAsync(appUser, "Administrator")
             };
             
             return Ok(new ApiResult<User> {Result = user});
@@ -79,7 +80,7 @@ namespace Zaginiony24.Controllers
                     {
                         Username = user.UserName,
                         Email = user.Email,
-                        AccessToken = _jwtGenerator.CreateToken(user)
+                        AccessToken = await _jwtGenerator.CreateToken(user)
                     }
                 });
             }
@@ -99,7 +100,7 @@ namespace Zaginiony24.Controllers
                 return BadRequest(new ApiResult<string>(new {User = ErrorCodes.UserWithThisUsernameAlreadyExists}));
 
             if (!model.Password.Equals(model.ConfirmPassword))
-                return BadRequest(new ApiResult<string>(new {User =ErrorCodes.PasswordDoNotMatch}));
+                return BadRequest(new ApiResult<string>(new {User = ErrorCodes.PasswordDoNotMatch}));
 
             var user = new AppUser
             {

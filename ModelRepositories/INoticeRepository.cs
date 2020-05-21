@@ -11,5 +11,6 @@ namespace Zaginiony24.ModelRepositories
         Task<Notice> GetAsync(Guid noticeId);
         Task<List<Notice>> GetAllNotices();
         Task<List<Notice>> GetNotices(string gender = null, string district = null);
+        Task<List<Notice>> GetNoticesWthUsers();
     }
 }

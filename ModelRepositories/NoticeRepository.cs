@@ -58,5 +58,9 @@ namespace Zaginiony24.ModelRepositories
             return queryable.ToListAsync();
         }
 
+        public async Task<List<Notice>> GetNoticesWthUsers()
+        {
+            return await _context.Notices.Include(n => n.AppUser).ToListAsync();
+        }
     }
 }

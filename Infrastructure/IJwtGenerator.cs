@@ -6,8 +6,8 @@ using Zaginiony24.Models;
 
 namespace Zaginiony24.Infrastructure
 {
-    public interface IJwtGenerator
+    public interface IJwtGenerator 
     {
-        public string CreateToken(AppUser user);
+        public Task<string> CreateToken(AppUser user);
     }
 }

@@ -21,7 +21,6 @@ namespace Zaginiony24.Models
                     {
                         new AppUser
                         {
-
                             Email = "admin@zaginiony24.pl",
                             EmailConfirmed = true,
                             PhoneNumber = "602212512",

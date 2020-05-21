@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { Form, Button, Header } from 'semantic-ui-react';
-import { RootStoreContext } from '../stores/rootStore';
-import { IUserFormValues } from '../models/user';
-import TextInput from '../form/TextInput';
+import { RootStoreContext } from '../../stores/rootStore';
+import { IUserFormValues } from '../../models/user';
+import TextInput from '../../form/TextInput';
 import { FORM_ERROR } from 'final-form';
 import { combineValidators, isRequired } from 'revalidate';
-import ErrorMessage from '../form/ErrorMessage';
+import ErrorMessage from '../../form/ErrorMessage';
 import Register from './Register';
 import { Link } from 'react-router-dom';
 

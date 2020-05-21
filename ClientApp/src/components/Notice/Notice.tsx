@@ -1,7 +1,7 @@
 ﻿import React from "react";
-import style from '../styles/notice.module.scss'
-import placeholder from '../pictures/120x150.png'
-import { INotice } from '../models/notice'
+import style from '../../styles/notice.module.scss'
+import placeholder from '../../pictures/120x150.png'
+import { INotice } from '../../models/notice'
 import { Link } from "react-router-dom";
 
 const Notice: React.FC<{ notice: INotice }> = ({ notice }) => {

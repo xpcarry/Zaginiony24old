@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { Form, Button, Header } from 'semantic-ui-react';
-import TextInput from '../form/TextInput';
-import { RootStoreContext } from '../stores/rootStore';
-import { IUserFormValues } from '../models/user';
+import TextInput from '../../form/TextInput';
+import { RootStoreContext } from '../../stores/rootStore';
+import { IUserFormValues } from '../../models/user';
 import { FORM_ERROR } from 'final-form';
 import { combineValidators, isRequired, composeValidators, matchesField } from 'revalidate';
-import ErrorMessage from '../form/ErrorMessage';
+import ErrorMessage from '../../form/ErrorMessage';
 
 const validate = combineValidators({
     username: isRequired('Username'),

@@ -1,19 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { Form, Button, Header, Grid, Segment, Label } from 'semantic-ui-react';
-import TextInput from '../form/TextInput';
-import { RootStoreContext } from '../stores/rootStore';
+import TextInput from '../../form/TextInput';
+import { RootStoreContext } from '../../stores/rootStore';
 import { FORM_ERROR } from 'final-form';
 import { combineValidators, isRequired, composeValidators, isNumeric } from 'revalidate';
-import ErrorMessage from '../form/ErrorMessage';
-import { INotice } from '../models/notice';
-import SelectInput from '../form/SelectInput';
-import DateInput from '../form/DateInput';
-import TextAreaInput from '../form/TextAreaInput';
-import agent from '../api/agent';
-import { history } from '../index'
-import { genderAddOptions, districtAddOptions } from '../form/options/options';
-import Login from './Login';
+import ErrorMessage from '../../form/ErrorMessage';
+import { INotice } from '../../models/notice';
+import SelectInput from '../../form/SelectInput';
+import DateInput from '../../form/DateInput';
+import TextAreaInput from '../../form/TextAreaInput';
+import agent from '../../api/agent';
+import { history } from '../../index'
+import { genderAddOptions, districtAddOptions } from '../../form/options/options';
+import Login from '../User/Login';
 
 const validate = combineValidators({
     name: isRequired({ message: 'Imię jest wymagane' }),

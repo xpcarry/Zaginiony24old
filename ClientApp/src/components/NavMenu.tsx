@@ -1,16 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { RootStoreContext } from '../stores/rootStore';
 import { Link } from 'react-router-dom';
-import Login from './Login'
+import Login from './User/Login'
 import './NavMenu.css';
-import Register from './Register';
+import Register from './User/Register';
 
 const NavMenu = () => {
   const rootStore = useContext(RootStoreContext);
-  const { user, logout } = rootStore.userStore;
+  const { user, logout, isAdmin } = rootStore.userStore;
   const { openModal } = rootStore.modalStore;
   const [collapsed, setCollapsed] = useState(true);
+
+  useEffect(() => {
+    
+  }, [user, isAdmin])
 
   const toggleNavbar = () => {
     setCollapsed(!collapsed);
@@ -52,11 +56,16 @@ const NavMenu = () => {
               <NavItem>
                 {user ? (
                   <NavLink tag={Link} className="text-dark" to="/notice/addnotice">Zgłoś zaginięcie</NavLink>
-                ):(
-                  <NavLink tag={Link} onClick={() => openModal(<Login />)} className="text-dark" to="#">Zgłoś zaginięcie</NavLink>
-                )}
-
+                ) : (
+                    <NavLink tag={Link} onClick={() => openModal(<Login />)} className="text-dark" to="#">Zgłoś zaginięcie</NavLink>
+                  )}
               </NavItem>
+              {user && isAdmin && (
+                <NavItem>
+                  <NavLink tag={Link} to='/manage' className="">Zarządzaj</NavLink>
+                </NavItem>
+              )}
+
             </ul>
           </Collapse>
         </Container>

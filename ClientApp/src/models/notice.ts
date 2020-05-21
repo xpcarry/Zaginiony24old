@@ -17,3 +17,11 @@ export interface INotice {
     datePosted: Date | null;
     user: IUser;
 }
+
+export interface IManageNotice {
+    id: string;
+    name: string;
+    surname: string;
+    datePosted: Date | null;
+    username:string;
+}

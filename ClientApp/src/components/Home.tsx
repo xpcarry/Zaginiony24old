@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Notice from './Notice';
+import Notice from './Notice/Notice';
 import style from '../styles/home.module.scss';
 import { Divider, Header, Segment, Dropdown, Form, Button } from 'semantic-ui-react';
 import agent from '../api/agent';
@@ -19,7 +19,6 @@ const Home = () => {
   const getNoticies = async () => {
     await agent.Noticies.home(gender, district)
       .then(response => {
-        console.log(response);
         if (response) {
           setNoticies(response);
         }
@@ -28,12 +27,10 @@ const Home = () => {
 
   const updateGender = (event: any, { value }: any) => {
     setGender(value);
-    console.log(value);
   };
 
   const updateDistrict = (event: any, { value }: any) => {
     setDistrict(value);
-    console.log(value);
   };
 
   return (
